@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <div className="">
       <main className="flex flex-col justify-center items-center w-[100vw] h-[100vh]">
-        <Card className="w-4/12 h-fit">
+        <Card className="min-w-[50vw] h-fit">
           <CardHeader>
             <CardTitle>Recipe Recommender</CardTitle>
             <CardDescription>Crave it? Say it. Cook it.</CardDescription>

@@ -55,7 +55,7 @@ export default function TextOption() {
 
         {mutation.data && <p>{mutation.data.recommendation}</p>}
       </CardContent>
-      <CardFooter>
+      <CardFooter className="flex flex-row justify-end">
         <Button
           loading={mutation.isPending}
           onClick={() => {
@@ -67,6 +67,7 @@ export default function TextOption() {
                 description: "Please enter a query!",
                 variant: "destructive",
               });
+              return;
             }
 
             mutation.mutate({ value: textInput });
