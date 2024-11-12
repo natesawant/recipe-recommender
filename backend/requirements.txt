@@ -3,3 +3,4 @@ kagglehub
 matplotlib
 pandas
 scikit-learn
+fastapi[standard]
