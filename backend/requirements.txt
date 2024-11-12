@@ -1,6 +1,7 @@
+fastapi[standard]
 ipykernel
 kagglehub
 matplotlib
+nltk
 pandas
 scikit-learn
-fastapi[standard]
