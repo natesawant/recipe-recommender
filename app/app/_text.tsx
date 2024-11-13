@@ -13,11 +13,12 @@ import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 
+// TODO: Move this somewhere else
 type Recipe = {
   name: string,
   description: string,
-  ingredients: string,
-  directions: string,
+  ingredients: string[],
+  directions: string[],
 }
 
 export default function TextOption() {
@@ -64,7 +65,7 @@ export default function TextOption() {
 
         {mutation.data && <p>{mutation.data.recommendation}</p>}
       </CardContent>
-      <CardFooter className="flex flex-row justify-between gap-96">
+      <CardContent>
         <ul className=" flex flex-col gap-4">
           {recipes && recipes.map((recipe, idx) =>
             <li key={idx} className="flex flex-col gap-2">
@@ -83,25 +84,25 @@ export default function TextOption() {
             </li>
           )}
         </ul>
-        <div className="h-full flex flex-row items-end justify-end">
-          <Button
-            loading={mutation.isPending}
-            onClick={() => {
-              if (textInput === "") {
-                toast({
-                  title: "Error",
-                  description: "Please enter a query!",
-                  variant: "destructive",
-                });
-                return;
-              }
+      </CardContent>
+      <CardFooter className="flex flex-row justify-end">
+        <Button
+          loading={mutation.isPending}
+          onClick={() => {
+            if (textInput === "") {
+              toast({
+                title: "Error",
+                description: "Please enter a query!",
+                variant: "destructive",
+              });
+              return;
+            }
 
-              mutation.mutate({ value: textInput });
-            }}
-          >
-            Submit
-          </Button>
-        </div>
+            mutation.mutate({ value: textInput });
+          }}
+        >
+          Submit
+        </Button>
       </CardFooter>
     </Card>
   );

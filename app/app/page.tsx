@@ -14,8 +14,8 @@ import TextOption from "./_text";
 export default function Home() {
   return (
     <div className="">
-      <main className="flex flex-col justify-center items-center w-[100vw] h-[100vh]">
-        <Card className="min-w-[50vw] px-64 h-fit">
+      <main className="flex flex-col justify-center items-center w-[100vw] pt-64 px-64">
+        <Card className="min-w-[50vw]">
           <CardHeader>
             <CardTitle>Recipe Recommender</CardTitle>
             <CardDescription>Crave it? Say it. Cook it.</CardDescription>
