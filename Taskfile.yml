@@ -1,0 +1,42 @@
+version: '3'
+
+tasks:
+  frontend:install:
+    desc: "Install frontend dependencies"
+    dir: app
+    cmds:
+      - npm install
+
+  frontend:start:
+    desc: "Start frontend server"
+    dir: app
+    cmds:
+      - npm run dev
+
+  backend:venv:
+    desc: "Activate backend virtual environment"
+    dir: backend
+    cmds:
+      - rm -rf .venv
+      - python3 -m venv .venv
+      - echo "Don't forget to run\n. source ./venv/bin/activate"
+  
+  backend:install:
+    desc: "Install backend dependencies"
+    dir: backend
+    cmds:
+      - .venv/bin/python3 -m pip install -r requirements.txt
+
+  backend:start:
+    desc: "Start backend server"
+    dir: backend
+    cmds:
+      - .venv/bin/python3 -m fastapi run main.py
+
+  start:
+    desc: "Start both frontend and backend servers"
+    deps: [frontend:start, backend:start]
+
+  install:
+    desc: "Install frontend and backend dependencies"
+    deps: [frontend:install, backend:install]
