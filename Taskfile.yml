@@ -11,6 +11,12 @@ tasks:
     desc: "Start frontend server"
     dir: app
     cmds:
+      - npm run start
+
+  frontend:dev:
+    desc: "Start frontend server"
+    dir: app
+    cmds:
       - npm run dev
 
   backend:venv:
@@ -33,9 +39,19 @@ tasks:
     cmds:
       - .venv/bin/python3 -m fastapi run main.py
 
+  backend:dev:
+    desc: "Start backend server"
+    dir: backend
+    cmds:
+      - .venv/bin/python3 -m fastapi dev main.py
+
   start:
     desc: "Start both frontend and backend servers"
     deps: [frontend:start, backend:start]
+
+  dev:
+    desc: "Start both frontend and backend development servers"
+    deps: [frontend:dev, backend:dev]
 
   install:
     desc: "Install frontend and backend dependencies"
