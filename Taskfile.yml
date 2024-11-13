@@ -33,6 +33,11 @@ tasks:
     cmds:
       - .venv/bin/python3 -m pip install -r requirements.txt
 
+  backend:setup:
+    desc: "Setup venv and dependencies"
+    dir: "backend"
+    deps: [backend:venv, backend:install]
+
   backend:start:
     desc: "Start backend server"
     dir: backend
