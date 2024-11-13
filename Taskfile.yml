@@ -7,6 +7,12 @@ tasks:
     cmds:
       - npm install
 
+  frontend:build:
+    desc: "Setup venv and dependencies"
+    dir: "app"
+    cmds:
+      - npm run build
+
   frontend:start:
     desc: "Start frontend server"
     dir: app
