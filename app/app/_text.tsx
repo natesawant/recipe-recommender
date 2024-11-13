@@ -19,13 +19,13 @@ export default function TextOption() {
   const { toast } = useToast();
 
   const postTextQuery = async ({ value }: { value: string }) => {
-    const response = await fetch("http://localhost:8000/recommend", {
+    const response = await fetch("http://localhost:8000/recommend/text", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ text: value, audio: null }),
+      body: JSON.stringify({ text: value }),
     });
     return await response.json();
   };
@@ -59,8 +59,6 @@ export default function TextOption() {
         <Button
           loading={mutation.isPending}
           onClick={() => {
-            console.log("clicked submit");
-
             if (textInput === "") {
               toast({
                 title: "Error",

@@ -1,8 +1,14 @@
-import { FaMicrophone, FaStop } from "react-icons/fa";
 import { Button } from "./ui/button";
 import useAudioRecorder from "@/hooks/useAudioRecorder";
 import { useEffect, useState } from "react";
 import { Skeleton } from "./ui/skeleton";
+import {
+  FaArrowRotateLeft,
+  FaMicrophone,
+  FaPause,
+  FaPlay,
+  FaStop,
+} from "react-icons/fa6";
 
 enum RecorderState {
   SETTING_UP,
@@ -11,11 +17,16 @@ enum RecorderState {
   FINISHED,
 }
 
-export default function AudioRecorder() {
-  const { recorder, audio } = useAudioRecorder();
+export default function AudioRecorder({
+  handleSubmit,
+}: {
+  handleSubmit: (file: File) => void;
+}) {
+  const { recorder, audio, file, reset } = useAudioRecorder();
   const [recorderState, setRecorderState] = useState<RecorderState>(
     RecorderState.SETTING_UP
   );
+  const [audioPlaying, setAudioPlaying] = useState(false);
 
   useEffect(() => {
     if (recorder !== null) {
@@ -30,6 +41,7 @@ export default function AudioRecorder() {
 
   console.log("current state:", recorderState);
   console.log("audio url:", audio);
+  console.log("encoded:", file);
 
   return (
     <>
@@ -64,30 +76,40 @@ export default function AudioRecorder() {
           <Button
             onClick={async () => {
               if (audio) {
-                console.log(audio);
-                await audio.play();
+                if (audioPlaying) {
+                  await audio.pause();
+                  audio.currentTime = 0;
+                  setAudioPlaying(false);
+                } else {
+                  await audio.play();
+                  setAudioPlaying(true);
+                }
               } else {
-                console.log("this shouldn't happen");
+                console.error("No audio element found!");
               }
             }}
           >
-            Play
+            {audioPlaying ? <FaPause /> : <FaPlay />}
           </Button>
 
           <Button
             onClick={() => {
-              console.log("reset recording");
+              reset();
               setRecorderState(RecorderState.READY);
+              setAudioPlaying(false);
             }}
           >
-            Reset
+            <FaArrowRotateLeft />
           </Button>
         </>
       )}
 
       <Button
+        disabled={file === undefined}
         onClick={() => {
-          console.log("clicked submit");
+          if (file) {
+            handleSubmit(file);
+          }
         }}
       >
         Submit

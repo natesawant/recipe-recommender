@@ -1,9 +1,9 @@
-from pydantic import BaseModel, AnyUrl, Base64Bytes
+from pydantic import BaseModel, AnyUrl
 from typing import Optional
+from fastapi import File
 
-class RecommendationRequest(BaseModel):
-    text: Optional[str]
-    audio: Optional[Base64Bytes]
+class RecommendationText(BaseModel):
+    text: str
 
 class Recipe(BaseModel):
     title: str
