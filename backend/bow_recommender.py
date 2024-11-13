@@ -36,7 +36,7 @@ class BoWRecommender(Recommender):
             recipe = {
                 "name": row["name"],
                 "description": row["description"],
-                "ingredients": ast.literal_eval(row["ingredients"]),
+                "ingredients": ast.literal_eval(row["ingredients_raw_str"]),
                 "directions": ast.literal_eval(row["steps"]),
             }
 
