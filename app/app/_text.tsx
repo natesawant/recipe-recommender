@@ -9,12 +9,13 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import RecipeCard from "@/components/ui/recipe";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 
 // TODO: Move this somewhere else
-type Recipe = {
+export type Recipe = {
   name: string,
   description: string,
   ingredients: string[],
@@ -43,7 +44,7 @@ export default function TextOption() {
     mutationFn: postTextQuery,
     onSuccess: (data) => {
       console.log("response data:", data);
-      setRecipes(data.recommendations)
+      setRecipes(data.recommendations as Recipe[])
     },
   });
 
@@ -68,20 +69,7 @@ export default function TextOption() {
       <CardContent>
         <ul className=" flex flex-col gap-4">
           {recipes && recipes.map((recipe, idx) =>
-            <li key={idx} className="flex flex-col gap-2">
-              <div>
-                <h1>{recipe.name}</h1>
-                <h2 className="italic">{recipe.description}</h2>
-              </div>
-              <div>
-                <h3>Ingredients</h3>
-                <ol>{recipe.ingredients}</ol>
-              </div>
-              <div>
-                <h3>Directions</h3>
-                <ol>{recipe.directions}</ol>
-              </div>
-            </li>
+            <RecipeCard key={idx} recipe={recipe} />
           )}
         </ul>
       </CardContent>

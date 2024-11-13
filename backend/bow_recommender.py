@@ -1,3 +1,4 @@
+import ast
 import pickle
 from pathlib import Path
 
@@ -35,8 +36,8 @@ class BoWRecommender(Recommender):
             recipe = {
                 "name": row["name"],
                 "description": row["description"],
-                "ingredients": row["ingredients"],
-                "directions": row["steps"],
+                "ingredients": ast.literal_eval(row["ingredients"]),
+                "directions": ast.literal_eval(row["steps"]),
             }
 
             results.append(recipe)
