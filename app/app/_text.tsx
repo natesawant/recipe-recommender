@@ -13,8 +13,16 @@ import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 
+type Recipe = {
+  name: string,
+  description: string,
+  ingredients: string,
+  directions: string,
+}
+
 export default function TextOption() {
   const [textInput, setTextInput] = useState("");
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
 
   const { toast } = useToast();
 
@@ -34,6 +42,7 @@ export default function TextOption() {
     mutationFn: postTextQuery,
     onSuccess: (data) => {
       console.log("response data:", data);
+      setRecipes(data.recommendations)
     },
   });
 
@@ -55,24 +64,44 @@ export default function TextOption() {
 
         {mutation.data && <p>{mutation.data.recommendation}</p>}
       </CardContent>
-      <CardFooter className="flex flex-row justify-end">
-        <Button
-          loading={mutation.isPending}
-          onClick={() => {
-            if (textInput === "") {
-              toast({
-                title: "Error",
-                description: "Please enter a query!",
-                variant: "destructive",
-              });
-              return;
-            }
+      <CardFooter className="flex flex-row justify-between gap-96">
+        <ul className=" flex flex-col gap-4">
+          {recipes && recipes.map((recipe, idx) =>
+            <li key={idx} className="flex flex-col gap-2">
+              <div>
+                <h1>{recipe.name}</h1>
+                <h2 className="italic">{recipe.description}</h2>
+              </div>
+              <div>
+                <h3>Ingredients</h3>
+                <ol>{recipe.ingredients}</ol>
+              </div>
+              <div>
+                <h3>Directions</h3>
+                <ol>{recipe.directions}</ol>
+              </div>
+            </li>
+          )}
+        </ul>
+        <div className="h-full flex flex-row items-end justify-end">
+          <Button
+            loading={mutation.isPending}
+            onClick={() => {
+              if (textInput === "") {
+                toast({
+                  title: "Error",
+                  description: "Please enter a query!",
+                  variant: "destructive",
+                });
+                return;
+              }
 
-            mutation.mutate({ value: textInput });
-          }}
-        >
-          Submit
-        </Button>
+              mutation.mutate({ value: textInput });
+            }}
+          >
+            Submit
+          </Button>
+        </div>
       </CardFooter>
     </Card>
   );
