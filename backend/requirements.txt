@@ -3,5 +3,7 @@ ipykernel
 kagglehub
 matplotlib
 nltk
+openai
 pandas
+pymongo[srv]
 scikit-learn
