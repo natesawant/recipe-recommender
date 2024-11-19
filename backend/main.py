@@ -4,7 +4,7 @@ from fastapi import FastAPI, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 
 from api_types import RecommendationText
-from bow_recommender import BoWRecommender
+from embedding_recommender import EmbeddingRecommender
 
 app = FastAPI()
 
@@ -12,7 +12,7 @@ origins = ["*"]
 
 app.add_middleware(CORSMiddleware, allow_origins=origins, allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 
-recommender = BoWRecommender()
+recommender = EmbeddingRecommender()
 
 @app.get("/")
 def read_root():
@@ -33,4 +33,4 @@ def recommend_audio(file: UploadFile):
 
     # TODO: convert to mp3 here and then run transcription service
 
-    return {"recommendation": "greek food"}
+    return {"recommendations": "greek food"}
