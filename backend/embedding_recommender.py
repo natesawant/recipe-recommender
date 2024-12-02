@@ -11,8 +11,8 @@ config = dotenv_values(".env")
 MONGO_URI = config["MONGO_URI"]
 OPENAI_API_KEY = config["OPENAI_API_KEY"]
 DB_NAME = "recipe-vectors"
-COLLECTION_NAME = "embeddings"
-INDEX_NAME = "embedding_vector_index"
+COLLECTION_NAME = "recipes"
+INDEX_NAME = "embedding_index"
 
 
 class EmbeddingRecommender(Recommender):
