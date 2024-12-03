@@ -1,10 +1,11 @@
 import base64
+import subprocess
 
 from fastapi import FastAPI, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 
 from api_types import RecommendationText
-from embedding_recommender import EmbeddingRecommender
+from embedding_recommender import EmbeddingRecommender, transcribe_audio
 
 app = FastAPI()
 
@@ -28,9 +29,9 @@ def recommend_audio(file: UploadFile):
     with file.file as f:
         contents = f.read()
 
-    with open('received_audio.webm', 'wb') as f:
-        f.write(contents)
+    with open('received_audio.webm', 'wb') as audio_file:
+        audio_file.write(contents)
 
-    # TODO: convert to mp3 here and then run transcription service
+    text = transcribe_audio('received_audio.webm')
 
-    return {"recommendations": "greek food"}
+    return {"recommendations": recommender.recommend(text)}

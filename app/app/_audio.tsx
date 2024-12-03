@@ -6,12 +6,17 @@ import {
   CardTitle,
   CardDescription,
   CardContent,
+  CardFooter,
 } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
+import { useState } from "react";
+import { Recipe } from "./_text";
+import RecipeCard from "@/components/ui/recipe";
 
 export default function AudioOption() {
   const { toast } = useToast();
+  const [recipes, setRecipes] = useState<Recipe[]>();
 
   const postAudioQuery = async ({ file }: { file: File }) => {
     const formData = new FormData();
@@ -31,6 +36,7 @@ export default function AudioOption() {
     mutationFn: postAudioQuery,
     onSuccess: (data) => {
       console.log("response data:", data);
+      setRecipes(data.recommendations as Recipe[]);
     },
   });
 
@@ -58,6 +64,14 @@ export default function AudioOption() {
       <CardContent className="flex flex-row justify-between">
         <AudioRecorder handleSubmit={handleSubmit} />
       </CardContent>
+      <CardFooter>
+        <ul className=" flex flex-col gap-4">
+          {recipes &&
+            recipes.map((recipe, idx) => (
+              <RecipeCard key={idx} recipe={recipe} />
+            ))}
+        </ul>
+      </CardFooter>
     </Card>
   );
 }
