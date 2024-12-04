@@ -19,8 +19,10 @@ enum RecorderState {
 
 export default function AudioRecorder({
   handleSubmit,
+  loading,
 }: {
   handleSubmit: (file: File) => void;
+  loading: boolean;
 }) {
   const { recorder, audio, file, reset } = useAudioRecorder();
   const [recorderState, setRecorderState] = useState<RecorderState>(
@@ -106,6 +108,7 @@ export default function AudioRecorder({
 
       <Button
         disabled={file === undefined}
+        loading={loading}
         onClick={() => {
           if (file) {
             handleSubmit(file);

@@ -62,7 +62,10 @@ export default function AudioOption() {
         <CardDescription>Record an audio prompt!</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-row justify-between">
-        <AudioRecorder handleSubmit={handleSubmit} />
+        <AudioRecorder
+          handleSubmit={handleSubmit}
+          loading={mutation.isPending}
+        />
       </CardContent>
       <CardFooter>
         <ul className=" flex flex-col gap-4">
