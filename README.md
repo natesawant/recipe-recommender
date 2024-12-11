@@ -10,6 +10,8 @@ The following steps require the installation of [Taskfile](https://taskfile.dev/
 
 ### Running with Taskfile
 
+**NOTE: Please remember to place the .env file submitted with the repository into the backend directory. Otherwise, the backend will not work because of required access to MongoDB and OpenAI.**
+
 To run the frontend, first make sure that you have both `npm` and `node` installed. Then run the following:
 
 ```bash
