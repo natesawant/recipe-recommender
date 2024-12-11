@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 tasks:
   frontend:install:
@@ -29,20 +29,23 @@ tasks:
     desc: "Activate backend virtual environment"
     dir: backend
     cmds:
-      - rm -rf .venv
+      - if [-d "backend/.venv"]; then "rm -rf .venv"; fi
       - python3 -m venv .venv
       - echo "Don't forget to run\n. source ./venv/bin/activate"
-  
+
   backend:install:
     desc: "Install backend dependencies"
     dir: backend
     cmds:
+      - task: backend:venv
       - .venv/bin/python3 -m pip install -r requirements.txt
 
   backend:setup:
     desc: "Setup venv and dependencies"
     dir: "backend"
-    deps: [backend:venv, backend:install]
+    cmds:
+      - task: backend:venv
+      - task: backend:install
 
   backend:start:
     desc: "Start backend server"
@@ -60,10 +63,18 @@ tasks:
     desc: "Start both frontend and backend servers"
     deps: [frontend:start, backend:start]
 
+  install:
+    desc: "Install frontend and backend dependencies"
+    deps: [frontend:install, backend:install]
+
+  setup:
+    deps: [frontend:install, backend:setup]
+
   dev:
     desc: "Start both frontend and backend development servers"
     deps: [frontend:dev, backend:dev]
 
-  install:
-    desc: "Install frontend and backend dependencies"
-    deps: [frontend:install, backend:install]
+  run:
+    cmds:
+      - task: setup
+      - task: dev
