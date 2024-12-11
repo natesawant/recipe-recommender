@@ -1,11 +1,9 @@
-import base64
-import subprocess
-
 from fastapi import FastAPI, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 
 from api_types import RecommendationText
-from embedding_recommender import EmbeddingRecommender, transcribe_audio
+from embedding_recommender import EmbeddingRecommender
+from transcribe import transcribe_audio
 
 app = FastAPI()
 
